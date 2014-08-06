@@ -3,15 +3,18 @@ angular.module("authService", [])
   ref = new Firebase(FIREBASE_URL)
   auth = $firebaseSimpleLogin(ref)
   Auth =
-    register: (user) ->
+    signup: (user) ->
       $rootScope.authInfo = user
       auth.$createUser user.email, user.password
 
     signedIn: ->
       auth.user isnt null
 
+    login: (user)->
+      $rootScope.authInfo = user
+      auth.$login('password', user)
+
     logout: ->
-      $rootScope.authInfo = null
       auth.$logout()
 
   $rootScope.signedIn = ->

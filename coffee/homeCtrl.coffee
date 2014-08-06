@@ -2,8 +2,9 @@ angular.module("starter.home.controllers", [])
 .controller "HomeCtrl", [
   "$scope"
   "$location"
+  "$rootScope"
   "Auth"
-  ($scope, $location, Auth) ->
+  ($scope, $location, $rootScope, Auth) ->
     "use strict"
     @greating = "Wha Gwon World!!"
     @ready = "Are you ready?"
@@ -11,6 +12,7 @@ angular.module("starter.home.controllers", [])
 
     $scope.logout = ()->
       console.log "logout"
+      $rootScope.authInfo = ""
       Auth.logout()
       $location.path('/')
 ]

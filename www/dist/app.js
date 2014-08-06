@@ -18,7 +18,11 @@ angular.module("starter.config", []).config([
       controller: "HomeCtrl as home"
     }).state("signup", {
       url: "/signup",
-      templateUrl: "templates/signup.html",
+      templateUrl: "templates/auth/signup.html",
+      controller: "AuthCtrl as auth"
+    }).state("signin", {
+      url: "/signin",
+      templateUrl: "templates/auth/signin.html",
       controller: "AuthCtrl as auth"
     });
     return $urlRouterProvider.otherwise("/home");
@@ -44,15 +48,18 @@ angular.module("authService", []).factory("Auth", function($firebaseSimpleLogin,
   ref = new Firebase(FIREBASE_URL);
   auth = $firebaseSimpleLogin(ref);
   Auth = {
-    register: function(user) {
+    signup: function(user) {
       $rootScope.authInfo = user;
       return auth.$createUser(user.email, user.password);
     },
     signedIn: function() {
       return auth.user !== null;
     },
+    login: function(user) {
+      $rootScope.authInfo = user;
+      return auth.$login('password', user);
+    },
     logout: function() {
-      $rootScope.authInfo = null;
       return auth.$logout();
     }
   };
@@ -65,14 +72,19 @@ angular.module("authService", []).factory("Auth", function($firebaseSimpleLogin,
 angular.module("starter.auth.controllers", ["authService"]).controller("AuthCtrl", [
   "$scope", "$location", "Auth", function($scope, $location, Auth) {
     "use strict";
-    this.greating = "This is a new page";
-    this.ready = "Are you ready for more?";
-    console.log(Auth);
     if (Auth.signedIn()) {
       $location.path('/');
     }
-    return $scope.register = function(user) {
-      return Auth.register(user).then(function(authUser) {
+    $scope.$on('firebaseSimpleLogin:login', function() {
+      return $location.path('/');
+    });
+    $scope.login = function(user) {
+      return Auth.login(user).then(function() {
+        return $location.path('/');
+      });
+    };
+    return $scope.signup = function(user) {
+      return Auth.signup(user).then(function(authUser) {
         return $location.path('/');
       });
     };

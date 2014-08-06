@@ -1,0 +1,15 @@
+<ion-view title="SignIn">
+	<ion-content has-header="true" padding="true">
+<div class="auth-forms">
+ 
+  <h2>Login</h2>
+ 
+  <form>
+    <input type="email" ng-model="user.email" placeholder="Email" class="form-control"><br>
+    <input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
+    <input type="submit" value="Login" class="btn btn-primary" ng-click="login(user)"/>
+  </form>
+ 
+</div>
+	</ion-content>
+</ion-view>

@@ -7,7 +7,11 @@ angular.module("starter.config", []).config([
       controller: "HomeCtrl as home"
     }).state("signup", {
       url: "/signup",
-      templateUrl: "templates/signup.html",
+      templateUrl: "templates/auth/signup.html",
+      controller: "AuthCtrl as auth"
+    }).state("signin", {
+      url: "/signin",
+      templateUrl: "templates/auth/signin.html",
       controller: "AuthCtrl as auth"
     });
     return $urlRouterProvider.otherwise("/home");

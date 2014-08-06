@@ -5,13 +5,17 @@ angular.module("starter.config", [])
   "$urlRouterProvider"
   ($stateProvider, $urlRouterProvider) ->
     "use strict"
-    $stateProvider.state("home",
+    $stateProvider.state "home",
       url: "/home"
       templateUrl: "templates/home.html"
       controller: "HomeCtrl as home"
-    ).state "signup",
+    .state "signup",
       url: "/signup"
-      templateUrl: "templates/signup.html"
+      templateUrl: "templates/auth/signup.html"
+      controller: "AuthCtrl as auth"
+    .state "signin",
+      url: "/signin"
+      templateUrl: "templates/auth/signin.html"
       controller: "AuthCtrl as auth"
 
     $urlRouterProvider.otherwise "/home"
